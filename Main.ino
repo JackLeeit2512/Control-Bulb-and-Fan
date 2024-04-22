@@ -11,19 +11,21 @@
 #define LED_MODE 33
 #define TIME_BETWEEN_BNT 50
 #define TIME_BETWEEN_AUTO_FAN 6000000
-#define FIREBASE_HOST "https://esp32-51b05-default-rtdb.firebaseio.com"
-#define FIREBASE_AUTH "pFOw8cuDHnyYHrEtZt5BWQGbaWKzaLOW4k8IEkhP"
 
-// #define WIFI_SSID "Phong 7A"
-// #define WIFI_PASSWORD "phong7a4nguoi"
+#define API_KEY "AIzaSyCLejWktrbQkwhQumtWzRzrFyQ6gOpYvmI"
+#define DATABASE_URL "esp-data-logging-a1f34-default-rtdb.asia-southeast1.firebasedatabase.app" 
+
+#define USER_EMAIL "tamle01687375070@gmail.com"
+#define USER_PASSWORD "Tamle2512" 
+
+#define STORAGE_BUCKET_ID "esp-data-logging-a1f34.appspot.com"
 
 #define  WIFI_SSID "KIM PHUNG"
 #define  WIFI_PASSWORD "68686868"
 
-// #define WIFI_SSID "Khoamutou"
-// #define WIFI_PASSWORD "Mechan11"
-
 FirebaseData fbdo;
+FirebaseAuth auth;
+FirebaseConfig config;
 
 int MODE = 1;
 
@@ -85,7 +87,14 @@ void setup() {
 
   ConnectWifi();
 
-  Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
+  config.api_key = API_KEY;
+
+  auth.user.email = USER_EMAIL;
+  auth.user.password = USER_PASSWORD;
+
+  config.database_url = DATABASE_URL;
+
+  Firebase.begin(&config, &auth);
   Firebase.reconnectWiFi(true);
 
   Firebase.setReadTimeout(fbdo, 1000 * 60);
